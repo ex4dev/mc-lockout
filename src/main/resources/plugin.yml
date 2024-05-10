@@ -1,0 +1,8 @@
+name: Lockout
+version: '${version}'
+main: dev.tswanson.lockout.Lockout
+api-version: '1.20'
+commands:
+  lockout:
+    description: "Main command for Lockout game plugin."
+    usage: "/lockout help"
