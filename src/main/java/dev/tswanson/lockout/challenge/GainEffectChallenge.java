@@ -19,12 +19,12 @@ public class GainEffectChallenge implements Challenge {
     }
 
     @Override
-    public String getName() {
+    public String name() {
         return name;
     }
 
     @Override
-    public Icon getIcon() {
+    public Icon icon() {
         return icon;
     }
 

@@ -5,6 +5,7 @@ import dev.tswanson.lockout.challenge.item.ObtainItemsChallenge;
 import dev.tswanson.lockout.challenge.mob.BreedMobChallenge;
 import dev.tswanson.lockout.challenge.mob.KillColoredSheepChallenge;
 import dev.tswanson.lockout.challenge.mob.TameMobChallenge;
+import dev.tswanson.lockout.challenge.opponent.*;
 import dev.tswanson.lockout.gui.StaticIcon;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
@@ -228,11 +229,18 @@ public final class Lockout extends JavaPlugin {
             new DieChallenge(StaticIcon.of(Material.BUCKET), "Die by suffocating", DamageType.IN_WALL),
             new DieChallenge(StaticIcon.of(Material.BEEHIVE), "Die by bee sting", DamageType.STING),
             new DieChallenge(StaticIcon.of(Material.CACTUS), "Die to a cactus", DamageType.CACTUS),
-            new DieChallenge(StaticIcon.of(Material.SWEET_BERRY_BUSH), "Die to a sweet berry bush", DamageType.SWEET_BERRY_BUSH),
+            new DieChallenge(StaticIcon.of(Material.SWEET_BERRIES), "Die to a sweet berry bush", DamageType.SWEET_BERRY_BUSH),
             new DieChallenge(StaticIcon.of(Material.ANVIL), "Die by anvil", DamageType.FALLING_ANVIL),
             new DieChallenge(StaticIcon.of(Material.RED_BED), "Die to intentional game design", DamageType.BAD_RESPAWN_POINT),
 
-            new KillEnemyPlayerChallenge(StaticIcon.of(Material.NETHERITE_SWORD), "Kill an enemy player")
+            new KillEnemyPlayerChallenge(StaticIcon.of(Material.NETHERITE_SWORD), "Kill an enemy player"),
+
+            new OpponentDamageChallenge(StaticIcon.of(Material.FEATHER), "Be the last team to take fall damage", EntityDamageEvent.DamageCause.FALL),
+            new OpponentMineChallenge(StaticIcon.of(Material.DIRT), "Be the last team to break a dirt block", Material.DIRT),
+            new OpponentMineChallenge(StaticIcon.of(Material.SHORT_GRASS), "Be the last team to break short grass", Material.SHORT_GRASS),
+            new OpponentBuildChallenge(StaticIcon.of(Material.COBBLESTONE), "Be the last team to place cobblestone", Material.COBBLESTONE),
+            new OpponentOpenChestChallenge(StaticIcon.of(Material.CHEST), "Be the last team to open a chest"),
+            new OpponentDieChallenge(StaticIcon.of(Material.SKELETON_SKULL), "Be the last team to have someone die")
 
 
             /*

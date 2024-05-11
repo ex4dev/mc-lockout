@@ -12,12 +12,12 @@ import org.bukkit.event.entity.EntityDeathEvent;
 
 public class KillColoredSheepChallenge implements Challenge {
     @Override
-    public Icon getIcon() {
+    public Icon icon() {
         return new StaticIcon(Material.LIGHT_BLUE_WOOL);
     }
 
     @Override
-    public String getName() {
+    public String name() {
         return "Kill a Colored Sheep";
     }
 

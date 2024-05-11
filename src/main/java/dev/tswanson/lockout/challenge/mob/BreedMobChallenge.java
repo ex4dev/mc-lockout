@@ -20,12 +20,12 @@ public class BreedMobChallenge implements Challenge {
     }
 
     @Override
-    public Icon getIcon() {
+    public Icon icon() {
         return icon;
     }
 
     @Override
-    public String getName() {
+    public String name() {
         return name;
     }
 

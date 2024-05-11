@@ -25,6 +25,7 @@ public class TeamManager {
     private final ScoreboardManager manager = Bukkit.getScoreboardManager();
     private Scoreboard board = manager.getMainScoreboard();
     private final HashMap<Team, Collection<Challenge>> completedChallenges = new HashMap<>();
+    private final HashMap<Team, Collection<Challenge>> failedChallenges = new HashMap<>();
 
     public Scoreboard getScoreboard() {
         return board;
@@ -37,6 +38,7 @@ public class TeamManager {
         Team team = board.registerNewTeam(name);
         team.setColor(color);
         completedChallenges.put(team, new HashSet<>());
+        failedChallenges.put(team, new HashSet<>());
         return team;
     }
 
@@ -82,6 +84,10 @@ public class TeamManager {
         markCompleted(getPlayerTeam(player), challenge);
     }
 
+    public void markFailed(Team team, Challenge challenge) {
+        failedChallenges.get(team).add(challenge);
+    }
+
     /**
      * Returns true if the challenge is completed by *anyone*.
      */
@@ -93,13 +99,25 @@ public class TeamManager {
     }
 
     public boolean isCompleted(Team team, Challenge challenge) {
-        Collection<Challenge> completed = completedChallenges.get(team);
-        if (completed == null) return false;
-        return completed.contains(challenge);
+        return completedChallenges.containsKey(team) && completedChallenges.get(team).contains(challenge);
     }
 
     public Team getCompletingTeam(Challenge challenge) {
         return completedChallenges.keySet().stream().filter((team) -> completedChallenges.get(team).contains(challenge)).findFirst().orElse(null);
+    }
+
+    public boolean isFailed(Team team, Challenge challenge) {
+        return failedChallenges.containsKey(team) && failedChallenges.get(team).contains(challenge);
+    }
+
+    public Set<Team> getFailingTeams(Challenge challenge) {
+        Set<Team> teams = new HashSet<>();
+        for (Map.Entry<Team, Collection<Challenge>> c : failedChallenges.entrySet()) {
+            if (c.getValue().contains(challenge)) {
+                teams.add(c.getKey());
+            }
+        }
+        return teams;
     }
 
     /**
@@ -107,6 +125,10 @@ public class TeamManager {
      */
     public boolean isCompleted(Player player, Challenge challenge) {
         return isCompleted(getPlayerTeam(player), challenge);
+    }
+
+    public boolean isFailed(Player player, Challenge challenge) {
+        return isFailed(getPlayerTeam(player), challenge);
     }
 
     public Collection<Challenge> getCompletedChallenges(Team team) {
@@ -124,5 +146,6 @@ public class TeamManager {
             objective.unregister();
         }
         completedChallenges.clear();
+        failedChallenges.clear();
     }
 }

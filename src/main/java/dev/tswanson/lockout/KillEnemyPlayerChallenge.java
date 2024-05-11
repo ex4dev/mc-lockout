@@ -18,12 +18,12 @@ public class KillEnemyPlayerChallenge implements Challenge {
     }
 
     @Override
-    public Icon getIcon() {
+    public Icon icon() {
         return this.icon;
     }
 
     @Override
-    public String getName() {
+    public String name() {
         return this.name;
     }
 

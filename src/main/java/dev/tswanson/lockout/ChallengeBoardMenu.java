@@ -1,7 +1,6 @@
 package dev.tswanson.lockout;
 
 import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -39,10 +38,10 @@ public class ChallengeBoardMenu implements Listener {
                         continue;
                     }
                     if (Lockout.getInstance().getTeamManager().isCompleted(tracked)) {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder().append("Tracked Challenge: " + tracked.getName() + " COMPLETE").build());
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder().append("Tracked Challenge: " + tracked.name() + " COMPLETE").build());
                         trackedChallenges.remove(player);
                     } else {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder().append("Tracked Challenge: " + tracked.getName()).build());
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder().append("Tracked Challenge: " + tracked.name()).build());
                     }
                 }
             }
@@ -65,7 +64,7 @@ public class ChallengeBoardMenu implements Listener {
         for (int x = 0; x < board.length; x++) {
             for (int y = 0; y < board[x].length; y++) {
                 Challenge challenge = board[x][y];
-                Material material = challenge.getIcon().getMaterial();
+                Material material = challenge.icon().getMaterial();
                 List<String> lore = List.of();
 
                 Team completedBy = Lockout.getInstance().getTeamManager().getCompletingTeam(challenge);
@@ -77,7 +76,7 @@ public class ChallengeBoardMenu implements Listener {
 
                 ItemStack icon = new ItemStack(material);
                 ItemMeta meta = icon.getItemMeta();
-                meta.setDisplayName(ChatColor.RESET + challenge.getName());
+                meta.setDisplayName(ChatColor.RESET + challenge.name());
                 meta.setLore(lore);
                 if (completedBy != null) {
                     meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
@@ -113,5 +112,9 @@ public class ChallengeBoardMenu implements Listener {
                 trackedChallenges.put(player, board[x][y]);
             }
         }
+    }
+
+    public Inventory getInventory() {
+        return gui;
     }
 }
