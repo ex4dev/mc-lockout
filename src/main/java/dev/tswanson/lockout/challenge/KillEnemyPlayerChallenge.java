@@ -1,31 +1,13 @@
-package dev.tswanson.lockout;
+package dev.tswanson.lockout.challenge;
 
-import dev.tswanson.lockout.gui.Icon;
-import org.bukkit.entity.EntityType;
+import dev.tswanson.lockout.Challenge;
+import dev.tswanson.lockout.Lockout;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scoreboard.Team;
 
-public class KillEnemyPlayerChallenge implements Challenge {
-    private final Icon icon;
-    private final String name;
-
-    public KillEnemyPlayerChallenge(Icon icon, String name) {
-        this.icon = icon;
-        this.name = name;
-    }
-
-    @Override
-    public Icon icon() {
-        return this.icon;
-    }
-
-    @Override
-    public String name() {
-        return this.name;
-    }
+public record KillEnemyPlayerChallenge(ChallengeMetadata metadata) implements Challenge {
 
     @EventHandler
     public void onPlayerKilled(PlayerDeathEvent event) {

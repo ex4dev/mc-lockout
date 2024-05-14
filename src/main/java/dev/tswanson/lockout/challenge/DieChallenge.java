@@ -1,40 +1,16 @@
 package dev.tswanson.lockout.challenge;
 
 import dev.tswanson.lockout.Challenge;
-import dev.tswanson.lockout.gui.Icon;
 import org.bukkit.damage.DamageType;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class DieChallenge implements Challenge {
+public record DieChallenge(ChallengeMetadata metadata, DamageType damageType, EntityType damagingEntityType) implements Challenge {
 
-    private final Icon icon;
-    private final String name;
-    private final DamageType damageType;
-    private final EntityType damagingEntityType;
-
-    public DieChallenge(Icon icon, String name, DamageType damageType, EntityType damagingEntityType) {
-        this.icon = icon;
-        this.name = name;
-        this.damageType = damageType;
-        this.damagingEntityType = damagingEntityType;
-    }
-
-    public DieChallenge(Icon icon, String name, DamageType damageType) {
-        this(icon, name, damageType, null);
-    }
-
-    @Override
-    public Icon icon() {
-        return this.icon;
-    }
-
-    @Override
-    public String name() {
-        return this.name;
+    public DieChallenge(ChallengeMetadata metadata, DamageType damageType) {
+        this(metadata, damageType, null);
     }
 
     @EventHandler

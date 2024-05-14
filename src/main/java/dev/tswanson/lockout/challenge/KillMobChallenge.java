@@ -6,30 +6,11 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-public class KillMobChallenge implements Challenge {
-    private final Icon icon;
-    private final String name;
-    private final EntityType entityType;
-
-    public KillMobChallenge(Icon icon, String name, EntityType mobType) {
-        this.icon = icon;
-        this.name = name;
-        this.entityType = mobType;
-    }
-
-    @Override
-    public Icon icon() {
-        return this.icon;
-    }
-
-    @Override
-    public String name() {
-        return this.name;
-    }
+public record KillMobChallenge(ChallengeMetadata metadata, EntityType mobType) implements Challenge {
 
     @EventHandler
     public void onMobKilled(EntityDeathEvent event) {
-        if (event.getEntityType() == this.entityType) {
+        if (event.getEntityType() == this.mobType) {
             if (event.getEntity().getKiller() != null) {
                 markCompleted(event.getEntity().getKiller());
             }

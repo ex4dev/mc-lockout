@@ -8,7 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +15,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
-import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 public class CompassHandler implements Listener {
@@ -35,7 +33,7 @@ public class CompassHandler implements Listener {
         ItemStack item = event.getItem();
         if (item == null) return;
         ItemMeta itemMeta = item.getItemMeta();
-        if (itemMeta != null && itemMeta.hasLore() && itemMeta.getLore().equals(COMPASS_LORE))
+        if (itemMeta != null && itemMeta.hasLore() && !itemMeta.getLore().equals(COMPASS_LORE))
             return;
 
         ArrayList<Player> players = Bukkit.getOnlinePlayers()

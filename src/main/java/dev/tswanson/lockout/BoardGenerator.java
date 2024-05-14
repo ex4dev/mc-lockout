@@ -1,5 +1,7 @@
 package dev.tswanson.lockout;
 
+import dev.tswanson.lockout.challenge.ChallengeDifficulty;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,10 +16,17 @@ public class BoardGenerator {
         Random random = new Random();
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
-                board[x][y] = pool.remove(random.nextInt(pool.size()));
+                board[x][y] = pool.remove(getRandomChallenge(random, pool, ChallengeDifficulty.fromRow(y)));
             }
         }
         return board;
+    }
+
+    private static int getRandomChallenge(Random random, List<Challenge> pool, ChallengeDifficulty difficulty) {
+        int index = random.nextInt(pool.size());
+        Challenge challenge = pool.get(index);
+        if (challenge.metadata().difficulty() != difficulty) return getRandomChallenge(random, pool, difficulty);
+        return index;
     }
 
     public Challenge[][] getBoard() {

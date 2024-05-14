@@ -38,10 +38,10 @@ public class ChallengeBoardMenu implements Listener {
                         continue;
                     }
                     if (Lockout.getInstance().getTeamManager().isCompleted(tracked)) {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder().append("Tracked Challenge: " + tracked.name() + " COMPLETE").build());
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder().append("Tracked Challenge: " + tracked.metadata().name() + " COMPLETE").build());
                         trackedChallenges.remove(player);
                     } else {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder().append("Tracked Challenge: " + tracked.name()).build());
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder().append("Tracked Challenge: " + tracked.metadata().name()).build());
                     }
                 }
             }
@@ -64,7 +64,7 @@ public class ChallengeBoardMenu implements Listener {
         for (int x = 0; x < board.length; x++) {
             for (int y = 0; y < board[x].length; y++) {
                 Challenge challenge = board[x][y];
-                Material material = challenge.icon().getMaterial();
+                Material material = challenge.metadata().icon().getMaterial();
                 List<String> lore = List.of();
 
                 Team completedBy = Lockout.getInstance().getTeamManager().getCompletingTeam(challenge);
@@ -76,7 +76,7 @@ public class ChallengeBoardMenu implements Listener {
 
                 ItemStack icon = new ItemStack(material);
                 ItemMeta meta = icon.getItemMeta();
-                meta.setDisplayName(ChatColor.RESET + challenge.name());
+                meta.setDisplayName(ChatColor.RESET + challenge.metadata().name());
                 meta.setLore(lore);
                 if (completedBy != null) {
                     meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);

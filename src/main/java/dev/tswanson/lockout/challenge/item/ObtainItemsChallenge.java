@@ -2,6 +2,7 @@ package dev.tswanson.lockout.challenge.item;
 
 import dev.tswanson.lockout.Challenge;
 import dev.tswanson.lockout.Lockout;
+import dev.tswanson.lockout.challenge.ChallengeMetadata;
 import dev.tswanson.lockout.gui.Icon;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,38 +14,14 @@ import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class ObtainItemsChallenge implements Challenge {
-    private final Icon icon;
-    private final String name;
-    private final Material[] items;
-    private final GoalType goalType;
+public record ObtainItemsChallenge(ChallengeMetadata metadata, GoalType goalType, Material... items) implements Challenge {
 
     public enum GoalType {
         ALL, ANY
     }
 
-    public ObtainItemsChallenge(Icon icon, String name, Material... items) {
-        this.icon = icon;
-        this.name = name;
-        this.items = items;
-        this.goalType = GoalType.ALL;
-    }
-
-    public ObtainItemsChallenge(Icon icon, String name, GoalType goalType, Material... items) {
-        this.icon = icon;
-        this.name = name;
-        this.items = items;
-        this.goalType = goalType;
-    }
-
-    @Override
-    public Icon icon() {
-        return this.icon;
-    }
-
-    @Override
-    public String name() {
-        return this.name;
+    public ObtainItemsChallenge(ChallengeMetadata metadata, Material... items) {
+        this(metadata, GoalType.ALL, items);
     }
 
     @EventHandler

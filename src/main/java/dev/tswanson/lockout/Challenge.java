@@ -1,5 +1,6 @@
 package dev.tswanson.lockout;
 
+import dev.tswanson.lockout.challenge.ChallengeMetadata;
 import dev.tswanson.lockout.gui.Icon;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,8 +11,7 @@ import org.bukkit.scoreboard.Team;
 
 public interface Challenge extends Listener {
 
-    String name();
-    Icon icon();
+    ChallengeMetadata metadata();
 
     default void initialize() {
 
@@ -28,15 +28,15 @@ public interface Challenge extends Listener {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (Lockout.getInstance().getTeamManager().getPlayerTeam(p).equals(team)) {
-                p.sendMessage(completingPlayer.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + " has completed a challenge for " + team.getColor() + team.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + ": " + ChatColor.YELLOW + this.name());
+                p.sendMessage(completingPlayer.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + " has completed a challenge for " + team.getColor() + team.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + ": " + ChatColor.YELLOW + this.metadata().name());
                 p.playSound(p, Sound.UI_TOAST_CHALLENGE_COMPLETE, 1.0f, 1.0f);
             } else {
-                p.sendMessage(completingPlayer.getDisplayName() + ChatColor.RESET + ChatColor.RED + " has completed a challenge for " + team.getColor() + team.getDisplayName() + ChatColor.RESET + ChatColor.RED + ": " + ChatColor.YELLOW + this.name());
+                p.sendMessage(completingPlayer.getDisplayName() + ChatColor.RESET + ChatColor.RED + " has completed a challenge for " + team.getColor() + team.getDisplayName() + ChatColor.RESET + ChatColor.RED + ": " + ChatColor.YELLOW + this.metadata().name());
                 p.playSound(p, Sound.ENTITY_ENDER_DRAGON_GROWL, 1.0f, 1.0f);
             }
         }
 
-        Bukkit.getConsoleSender().sendMessage(completingPlayer.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + " has completed a challenge for " + team.getColor() + team.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + ": " + ChatColor.YELLOW + this.name());
+        Bukkit.getConsoleSender().sendMessage(completingPlayer.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + " has completed a challenge for " + team.getColor() + team.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + ": " + ChatColor.YELLOW + this.metadata().name());
     }
 
     default void markFailed(Player failingPlayer) {

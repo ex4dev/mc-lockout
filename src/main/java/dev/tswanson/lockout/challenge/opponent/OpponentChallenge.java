@@ -38,10 +38,10 @@ public interface OpponentChallenge extends Challenge {
 
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (Lockout.getInstance().getTeamManager().getPlayerTeam(p).equals(lastRemainingTeam)) {
-                    p.sendMessage(lastRemainingTeam.getColor() + lastRemainingTeam.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + " has completed a challenge after " + failingTeam.getColor() + failingTeam.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + " failed: " + ChatColor.YELLOW + this.name());
+                    p.sendMessage(lastRemainingTeam.getColor() + lastRemainingTeam.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + " has completed a challenge after " + failingTeam.getColor() + failingTeam.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + " failed: " + ChatColor.YELLOW + this.metadata().name());
                     p.playSound(p, Sound.UI_TOAST_CHALLENGE_COMPLETE, 1.0f, 1.0f);
                 } else {
-                    p.sendMessage(lastRemainingTeam.getColor() + lastRemainingTeam.getDisplayName() + ChatColor.RESET + ChatColor.RED + " has completed a challenge after " + failingTeam.getColor() + failingTeam.getDisplayName() + ChatColor.RESET + ChatColor.RED + " failed: " + ChatColor.YELLOW + this.name());
+                    p.sendMessage(lastRemainingTeam.getColor() + lastRemainingTeam.getDisplayName() + ChatColor.RESET + ChatColor.RED + " has completed a challenge after " + failingTeam.getColor() + failingTeam.getDisplayName() + ChatColor.RESET + ChatColor.RED + " failed: " + ChatColor.YELLOW + this.metadata().name());
                     p.playSound(p, Sound.ENTITY_ENDER_DRAGON_GROWL, 1.0f, 1.0f);
                 }
             }
@@ -50,10 +50,10 @@ public interface OpponentChallenge extends Challenge {
             // Number of teams left != 1
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (Lockout.getInstance().getTeamManager().getPlayerTeam(p).equals(failingTeam)) {
-                    p.sendMessage(failingPlayer.getDisplayName() + ChatColor.RESET + ChatColor.RED + " has failed a challenge for " + failingTeam.getColor() + failingTeam.getDisplayName() + ChatColor.RESET + ChatColor.RED + ": " + ChatColor.YELLOW + this.name());
+                    p.sendMessage(failingPlayer.getDisplayName() + ChatColor.RESET + ChatColor.RED + " has failed a challenge for " + failingTeam.getColor() + failingTeam.getDisplayName() + ChatColor.RESET + ChatColor.RED + ": " + ChatColor.YELLOW + this.metadata().name());
                     p.playSound(p, Sound.BLOCK_BEACON_DEACTIVATE, 1.0f, 1.0f);
                 } else {
-                    p.sendMessage(failingPlayer.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + " has failed a challenge for " + failingTeam.getColor() + failingTeam.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + ": " + ChatColor.YELLOW + this.name());
+                    p.sendMessage(failingPlayer.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + " has failed a challenge for " + failingTeam.getColor() + failingTeam.getDisplayName() + ChatColor.RESET + ChatColor.GREEN + ": " + ChatColor.YELLOW + this.metadata().name());
                 }
             }
         } catch (NoSuchElementException ignored) {}

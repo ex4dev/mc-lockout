@@ -1,11 +1,11 @@
 package dev.tswanson.lockout.challenge.opponent;
 
-import dev.tswanson.lockout.gui.Icon;
+import dev.tswanson.lockout.challenge.ChallengeMetadata;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-public record OpponentBuildChallenge(Icon icon, String name, Material material) implements OpponentChallenge {
+public record OpponentBuildChallenge(ChallengeMetadata metadata, Material material) implements OpponentChallenge {
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
         if (event.getBlock().getType() != material) return;

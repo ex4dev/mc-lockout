@@ -1,12 +1,12 @@
 package dev.tswanson.lockout.challenge.opponent;
 
-import dev.tswanson.lockout.gui.Icon;
+import dev.tswanson.lockout.challenge.ChallengeMetadata;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-public record OpponentDamageChallenge(Icon icon, String name, EntityDamageEvent.DamageCause damageCause) implements OpponentChallenge {
+public record OpponentDamageChallenge(ChallengeMetadata metadata, EntityDamageEvent.DamageCause damageCause) implements OpponentChallenge {
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
         if (event.getEntityType() != EntityType.PLAYER) return;

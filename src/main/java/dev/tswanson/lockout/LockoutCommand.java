@@ -26,7 +26,7 @@ public class LockoutCommand implements CommandExecutor {
 
         if (args[0].equals("assign")) {
             TeamManager teamManager = Lockout.getInstance().getTeamManager();
-            if (teamManager.getTeams().isEmpty()) teamManager.createTeams(2);
+            if (teamManager.getTeams().isEmpty()) teamManager.createTeams(3);
             teamManager.assignRandomTeams();
             return true;
         }
