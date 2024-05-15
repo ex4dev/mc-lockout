@@ -1,6 +1,7 @@
 package dev.tswanson.lockout;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,7 +18,10 @@ public class LockoutCommand implements CommandExecutor {
         }
 
         if (args[0].equals("reset")) {
-            // TODO end game here
+            if (Lockout.getInstance().isIngame() && (args.length < 2 || !args[1].equals("-f"))) {
+                sender.sendMessage(ChatColor.RED + "A game is currently active! Use -f to reset anyway.");
+                return true;
+            }
             Lockout.getInstance().getTeamManager().clear();
             Lockout.getInstance().getBoardGenerator().resetBoard();
             Lockout.getInstance().getMenu().clear();
@@ -25,8 +29,12 @@ public class LockoutCommand implements CommandExecutor {
         }
 
         if (args[0].equals("assign")) {
+            if (Lockout.getInstance().isIngame() && (args.length < 2 || !args[1].equals("-f"))) {
+                sender.sendMessage(ChatColor.RED + "The game has already started! Use -f to reassign teams anyway.");
+                return true;
+            }
             TeamManager teamManager = Lockout.getInstance().getTeamManager();
-            if (teamManager.getTeams().isEmpty()) teamManager.createTeams(3);
+            if (teamManager.getTeams().isEmpty()) teamManager.createTeams(2);
             teamManager.assignRandomTeams();
             return true;
         }
@@ -40,20 +48,28 @@ public class LockoutCommand implements CommandExecutor {
         }
 
         if (args[0].equals("start")) {
+            if (Lockout.getInstance().isIngame() && (args.length < 2 || !args[1].equals("-f"))) {
+                sender.sendMessage(ChatColor.RED + "The game has already started! Use -f to start anyway.");
+                return true;
+            }
+            sender.sendMessage("Starting game");
+            Lockout.getInstance().startGame();
             for (Player player : Bukkit.getOnlinePlayers()) {
                 Location loc = SpawnHelper.getRandomSpawnpoint(player.getWorld());
+                player.getInventory().clear();
+                player.setHealth(player.getMaxHealth());
+                player.setSaturation(20.0f);
+                player.setFoodLevel(20);
                 player.setRespawnLocation(loc); // TODO this doesn't work ("home bed was missing/obstructed")
                 player.teleport(loc);
             }
-            Lockout.getInstance().startGame();
+            sender.sendMessage("Done. Teams: " + String.join(", ", Lockout.getInstance().getTeamManager().getTeams().toString()));
             return true;
         }
 
         printHelp(sender);
         return true;
     }
-
-
 
     private void printHelp(CommandSender sender) {
         sender.sendMessage("/lockout help : Displays this message.");
