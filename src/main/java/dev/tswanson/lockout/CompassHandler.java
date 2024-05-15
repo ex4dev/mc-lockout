@@ -24,16 +24,22 @@ public class CompassHandler implements Listener {
     private final Map<Player, Player> compassTargets = new HashMap<>();
     private BukkitTask task;
     private final ItemStack compassItem = new ItemStack(Material.COMPASS);
+    private final HashMap<Player, Long> lastCompassChange = new HashMap<>();
 
     @EventHandler
     public void onRightClick(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_AIR)
             return;
 
+        long currentTime = event.getPlayer().getWorld().getFullTime();
+        if (lastCompassChange.getOrDefault(event.getPlayer(), 0L) + 10 > currentTime) return;
+        lastCompassChange.put(event.getPlayer(), currentTime);
+        event.getPlayer().sendMessage("Updating compass");
+
         ItemStack item = event.getItem();
         if (item == null) return;
         ItemMeta itemMeta = item.getItemMeta();
-        if (itemMeta != null && itemMeta.hasLore() && !itemMeta.getLore().equals(COMPASS_LORE))
+        if (itemMeta != null && (!itemMeta.hasLore() || !itemMeta.getLore().equals(COMPASS_LORE)))
             return;
 
         ArrayList<Player> players = Bukkit.getOnlinePlayers()
@@ -76,17 +82,6 @@ public class CompassHandler implements Listener {
         }
     }
 
-    // TODO ?
-//    @EventHandler
-//    public void onInventoryClick(InventoryClickEvent event) {
-//        ItemStack item = event.getCurrentItem();
-//        if (item == null) return;
-//        ItemMeta itemMeta = item.getItemMeta();
-//        if (itemMeta != null && itemMeta.hasLore() && itemMeta.getLore().equals(COMPASS_LORE)) {
-//            event.setCancelled(true);
-//        }
-//    }
-
     public void initialize() {
         this.task = Bukkit.getScheduler().runTaskTimer(Lockout.getInstance(), () -> {
             // Twice per second, update players' compasses
@@ -121,7 +116,7 @@ public class CompassHandler implements Listener {
             ItemStack item = player.getInventory().getItem(i);
             if (item == null) continue;
             ItemMeta itemMeta = item.getItemMeta();
-            if (itemMeta== null) continue;
+            if (itemMeta == null) continue;
             List<String> lore = itemMeta.getLore();
             if (lore == null) continue;
             if (lore.equals(COMPASS_LORE)) {
@@ -130,9 +125,13 @@ public class CompassHandler implements Listener {
             }
         }
 
-        // TODO prevent player from receiving extra compass upon dragging compass in inventory
-        if (!hasCompass) player.getInventory().addItem(compass);
-
+        // prevent player from receiving extra compass upon dragging compass in inventory
+        ItemStack cursorItem = player.getItemOnCursor();
+        if (!hasCompass) {
+            if (!cursorItem.hasItemMeta() || !cursorItem.getItemMeta().hasLore() || !cursorItem.getItemMeta().getLore().equals(COMPASS_LORE)) {
+                player.getInventory().addItem(compass);
+            }
+        }
         if (compassTargets.containsKey(player)) {
             player.setCompassTarget(compassTargets.get(player).getLocation());
         }
