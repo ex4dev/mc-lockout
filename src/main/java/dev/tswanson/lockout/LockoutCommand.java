@@ -4,12 +4,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO add permissions to subcommands
-public class LockoutCommand implements CommandExecutor {
+public class LockoutCommand implements TabExecutor {
+    private static final List<String> subcommands = List.of("help", "reset", "assign", "board", "start");
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length < 1) {
@@ -25,6 +30,7 @@ public class LockoutCommand implements CommandExecutor {
             Lockout.getInstance().getTeamManager().clear();
             Lockout.getInstance().getBoardGenerator().resetBoard();
             Lockout.getInstance().getMenu().clear();
+            sender.sendMessage("Successfully reset teams and challenge board.");
             return true;
         }
 
@@ -77,5 +83,12 @@ public class LockoutCommand implements CommandExecutor {
         sender.sendMessage("/lockout assign : Assigns all online players to a random team.");
         sender.sendMessage("/lockout board : Opens the board GUI.");
         sender.sendMessage("/lockout start : Starts the game.");
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        List<String> completions = new ArrayList<>();
+        if (args.length != 1) return completions;
+        return StringUtil.copyPartialMatches(args[0].toLowerCase(), subcommands, completions);
     }
 }
