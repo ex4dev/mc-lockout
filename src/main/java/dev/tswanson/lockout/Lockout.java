@@ -241,13 +241,13 @@ public final class Lockout extends JavaPlugin {
             new OpponentMineChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.SHORT_GRASS), "Be the last team to break short grass"), Material.SHORT_GRASS),
             new OpponentBuildChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.COBBLESTONE), "Be the last team to place cobblestone"), Material.COBBLESTONE),
             new OpponentOpenChestChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.CHEST), "Be the last team to open a chest")),
-            new OpponentDieChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.SKELETON_SKULL), "Be the last team to have someone die"))
+            new OpponentDieChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.SKELETON_SKULL), "Be the last team to have someone die")),
+
+            new WaterClutchChallenge(ChallengeMetadata.of(ChallengeDifficulty.EASY, StaticIcon.of(Material.WATER_BUCKET), "Break a 25+ block fall with a water bucket"), 25)
 
 
             /*
         Delete an entry from here once it's implemented and added to the list:
-
-        Avoid fatal fall damage with a water bucket
 
         fill_armor_stand,
         wear_carved_pumpkin,

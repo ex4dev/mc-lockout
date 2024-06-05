@@ -34,7 +34,6 @@ public class CompassHandler implements Listener {
         long currentTime = event.getPlayer().getWorld().getFullTime();
         if (lastCompassChange.getOrDefault(event.getPlayer(), 0L) + 10 > currentTime) return;
         lastCompassChange.put(event.getPlayer(), currentTime);
-        event.getPlayer().sendMessage("Updating compass");
 
         ItemStack item = event.getItem();
         if (item == null) return;
