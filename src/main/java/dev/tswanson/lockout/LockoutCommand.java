@@ -27,6 +27,7 @@ public class LockoutCommand implements TabExecutor {
                 sender.sendMessage(ChatColor.RED + "A game is currently active! Use -f to reset anyway.");
                 return true;
             }
+            Lockout.getInstance().endGame();
             Lockout.getInstance().getTeamManager().clear();
             Lockout.getInstance().getBoardGenerator().resetBoard();
             Lockout.getInstance().getMenu().clear();

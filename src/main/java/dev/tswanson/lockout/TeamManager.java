@@ -46,6 +46,7 @@ public class TeamManager {
      * Creates a specific number of teams with default names (red, blue, etc.) and adds them to the scoreboard.
      */
     public void createTeams(int teamCount) {
+        clear();
         Set<Map.Entry<ChatColor, String>> teamNames = randomTeamNames.entrySet();
         var iterator = teamNames.iterator();
         for (int i = 0; i < teamCount; i++) {

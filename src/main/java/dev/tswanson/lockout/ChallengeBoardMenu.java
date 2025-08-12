@@ -79,7 +79,7 @@ public class ChallengeBoardMenu implements Listener {
                 meta.setDisplayName(ChatColor.RESET + challenge.metadata().name());
                 meta.setLore(lore);
                 if (completedBy != null) {
-                    meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+                    meta.addEnchant(Enchantment.PROTECTION, 1, true);
                     meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 }
                 icon.setItemMeta(meta);

@@ -90,7 +90,7 @@ public final class Lockout extends JavaPlugin {
             new KillMobChallenge(ChallengeMetadata.of(ChallengeDifficulty.HARD, StaticIcon.of(Material.SILVERFISH_SPAWN_EGG), "Kill a Silverfish"), EntityType.SILVERFISH),
             new KillMobChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.GUARDIAN_SPAWN_EGG), "Kill a Guardian"), EntityType.GUARDIAN),
             new KillMobChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.GHAST_SPAWN_EGG), "Kill a Ghast"), EntityType.GHAST),
-            new KillMobChallenge(ChallengeMetadata.of(ChallengeDifficulty.EASY, StaticIcon.of(Material.SNOW_GOLEM_SPAWN_EGG), "Kill a Snow Golem"), EntityType.SNOWMAN),
+            new KillMobChallenge(ChallengeMetadata.of(ChallengeDifficulty.EASY, StaticIcon.of(Material.SNOW_GOLEM_SPAWN_EGG), "Kill a Snow Golem"), EntityType.SNOW_GOLEM),
             new KillMobChallenge(ChallengeMetadata.of(ChallengeDifficulty.HARD, StaticIcon.of(Material.ELDER_GUARDIAN_SPAWN_EGG), "Kill an Elder Guardian"), EntityType.ELDER_GUARDIAN),
             new KillMobChallenge(ChallengeMetadata.of(ChallengeDifficulty.HARD, StaticIcon.of(Material.ENDERMITE_SPAWN_EGG), "Kill an Endermite"), EntityType.ENDERMITE),
             new KillColoredSheepChallenge(ChallengeMetadata.of(ChallengeDifficulty.EASY, StaticIcon.of(Material.PINK_WOOL), "Kill a colored sheep")),
@@ -197,12 +197,12 @@ public final class Lockout extends JavaPlugin {
             new BreedMobChallenge(ChallengeMetadata.of(ChallengeDifficulty.HARD, StaticIcon.of(Material.STRIDER_SPAWN_EGG), "Breed striders"), EntityType.STRIDER),
             new BreedMobChallenge(ChallengeMetadata.of(ChallengeDifficulty.HARD, StaticIcon.of(Material.GOAT_SPAWN_EGG), "Breed goats"), EntityType.GOAT),
 
-            new GainEffectChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.POTION), "Gain nausea"), PotionEffectType.CONFUSION),
-            new GainEffectChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.POTION), "Gain jump boost"), PotionEffectType.JUMP),
+            new GainEffectChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.POTION), "Gain nausea"), PotionEffectType.NAUSEA),
+            new GainEffectChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.POTION), "Gain jump boost"), PotionEffectType.JUMP_BOOST),
             new GainEffectChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.POTION), "Gain absorption"), PotionEffectType.ABSORPTION),
             new GainEffectChallenge(ChallengeMetadata.of(ChallengeDifficulty.EXTREME, StaticIcon.of(Material.POTION), "Gain levitation"), PotionEffectType.LEVITATION),
             new GainEffectChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.POTION), "Gain glowing"), PotionEffectType.GLOWING),
-            new GainEffectChallenge(ChallengeMetadata.of(ChallengeDifficulty.HARD, StaticIcon.of(Material.POTION), "Gain mining fatigue"), PotionEffectType.SLOW_DIGGING),
+            new GainEffectChallenge(ChallengeMetadata.of(ChallengeDifficulty.HARD, StaticIcon.of(Material.POTION), "Gain mining fatigue"), PotionEffectType.MINING_FATIGUE),
             new GainEffectChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.POTION), "Gain bad omen"), PotionEffectType.BAD_OMEN),
             new GainEffectChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.POTION), "Gain weakness"), PotionEffectType.WEAKNESS),
             new GainEffectChallenge(ChallengeMetadata.of(ChallengeDifficulty.MEDIUM, StaticIcon.of(Material.POTION), "Gain poison"), PotionEffectType.POISON),
@@ -345,6 +345,7 @@ public final class Lockout extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getCommand("lockout").setExecutor(new LockoutCommand());
+        this.getCommand("b").setExecutor(new BoardCommand());
         challenges.forEach(challenge -> {
             Bukkit.getPluginManager().registerEvents(challenge, this);
             challenge.initialize();
